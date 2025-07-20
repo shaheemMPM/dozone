@@ -12,9 +12,34 @@
   "app": {
     "windows": [
       {
-        "title": "dozone",
-        "width": 800,
-        "height": 600
+        "label": "main",
+        "url": "http://localhost:1420",
+        "title": "Dozone",
+        "width": 1200,
+        "height": 800,
+        "resizable": true
+      },
+      {
+        "label": "pamphlet",
+        "url": "http://localhost:1420",
+        "title": "Dozone – Pamphlet",
+        "width": 400,
+        "height": 700,
+        "resizable": false,
+        "decorations": true,
+        "alwaysOnTop": true,
+        "visible": false
+      },
+      {
+        "label": "focus",
+        "url": "http://localhost:1420",
+        "title": "Dozone – Focus",
+        "width": 280,
+        "height": 140,
+        "resizable": false,
+        "decorations": true,
+        "alwaysOnTop": true,
+        "visible": false
       }
     ],
     "security": {
