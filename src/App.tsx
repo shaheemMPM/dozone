@@ -1,7 +1,7 @@
 const App = () => {
   return (
-    <div>
-      <h1>Dozone</h1>
+    <div className="main-wrapper">
+      <h1>Dozone is running 🎯</h1>
     </div>
   );
 };

@@ -12,6 +12,7 @@
     "enabled": true,
     "includes": [
       "**/*.js",
+      "**/*.css",
       "**/*.ts",
       "**/*.tsx",
       "**/*.json",
