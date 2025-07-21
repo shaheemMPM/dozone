@@ -23,6 +23,12 @@ fn hide_window(app: tauri::AppHandle, label: &str) {
 }
 
 #[tauri::command]
+fn get_all_tasks(state: tauri::State<AppState>) -> Vec<Task> {
+    let store = state.task_store.lock().unwrap();
+    store.tasks.clone()
+}
+
+#[tauri::command]
 fn create_dummy_task(state: State<AppState>) {
     let mut store = state.task_store.lock().unwrap();
     let now = chrono::Utc::now();
@@ -52,7 +58,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             show_window,
             hide_window,
-            create_dummy_task
+            create_dummy_task,
+            get_all_tasks
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

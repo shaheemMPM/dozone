@@ -1,14 +1,10 @@
+import type { Task } from "../../types/Task";
 import TaskCard from "../TaskCard/TaskCard";
 import "./BoardColumn.css";
 
-export type DummyTask = {
-  id: string;
-  title: string;
-};
-
 type Props = {
   title: string;
-  tasks: DummyTask[];
+  tasks: Task[];
 };
 
 const BoardColumn = ({ title, tasks }: Props) => {

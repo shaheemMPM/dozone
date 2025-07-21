@@ -1,27 +1,38 @@
-import BoardColumn, {
-  type DummyTask,
-} from "../../components/BoardColumn/BoardColumn";
+import { useEffect, useState } from "react";
+import BoardColumn from "../../components/BoardColumn/BoardColumn";
 import "./MainWindow.css";
-
-const dummyData: Record<string, DummyTask[]> = {
-  Backlog: [
-    { id: "1", title: "Sketch homepage layout" },
-    { id: "2", title: "Research drag-and-drop libraries" },
-  ],
-  "This Week": [{ id: "3", title: "Finish MVP routing" }],
-  Today: [
-    { id: "4", title: "Fix persist bug in TaskStore" },
-    { id: "5", title: "Style board columns properly" },
-  ],
-  Done: [{ id: "6", title: "Add dummy task button" }],
-};
+import { invoke } from "@tauri-apps/api/core";
+import type { Task } from "../../types/Task";
 
 const MainWindow = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const allTasks = await invoke<Task[]>("get_all_tasks");
+        console.log("All tasks: ", allTasks);
+
+        setTasks(allTasks);
+      } catch (err) {
+        console.error("Failed to load tasks:", err);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  const sections = ["Backlog", "This Week", "Today", "Done"];
+
   return (
     <div className="main-window-wrapper">
       <div className="board-layout">
-        {Object.entries(dummyData).map(([section, tasks]) => (
-          <BoardColumn key={section} title={section} tasks={tasks} />
+        {sections.map((section) => (
+          <BoardColumn
+            key={section}
+            title={section}
+            tasks={tasks.filter((t) => t.section === section)}
+          />
         ))}
       </div>
     </div>
