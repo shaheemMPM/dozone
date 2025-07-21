@@ -1,17 +1,24 @@
 import TaskCard from "../TaskCard/TaskCard";
 import "./BoardColumn.css";
 
-type Props = {
+export type DummyTask = {
+  id: string;
   title: string;
 };
 
-const BoardColumn = ({ title }: Props) => {
+type Props = {
+  title: string;
+  tasks: DummyTask[];
+};
+
+const BoardColumn = ({ title, tasks }: Props) => {
   return (
     <div className="board-column">
       <h2 className="column-title">{title}</h2>
       <div className="task-list">
-        <TaskCard title="Sample task title" />
-        <TaskCard title="Another task" />
+        {tasks.map((task) => (
+          <TaskCard key={task.id} title={task.title} />
+        ))}
       </div>
       <button type="button" className="add-task-button">
         + ADD TASK
