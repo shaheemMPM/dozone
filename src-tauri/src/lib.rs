@@ -1,50 +1,14 @@
+pub mod commands;
 pub mod controller;
 pub mod model;
 pub mod storage;
 
 use crate::controller::state::AppState;
 use crate::controller::task_controller::TaskStore;
-use crate::model::types::Task;
-use tauri::{Manager, State};
+use tauri::Manager;
 
-#[tauri::command]
-fn show_window(app: tauri::AppHandle, label: &str) {
-    if let Some(window) = app.get_webview_window(label) {
-        let _ = window.show();
-        let _ = window.set_focus();
-    }
-}
-
-#[tauri::command]
-fn hide_window(app: tauri::AppHandle, label: &str) {
-    if let Some(window) = app.get_webview_window(label) {
-        let _ = window.hide();
-    }
-}
-
-#[tauri::command]
-fn get_all_tasks(state: tauri::State<AppState>) -> Vec<Task> {
-    let store = state.task_store.lock().unwrap();
-    store.tasks.clone()
-}
-
-#[tauri::command]
-fn create_dummy_task(state: State<AppState>) {
-    let mut store = state.task_store.lock().unwrap();
-    let now = chrono::Utc::now();
-    let task = Task {
-        id: uuid::Uuid::new_v4().to_string(),
-        board_id: "default".to_string(),
-        title: "Dummy Task".to_string(),
-        notes: Some("This is a dummy task".to_string()),
-        section: "today".to_string(),
-        order: store.tasks.len(),
-        subtasks: vec![],
-        created_at: now,
-        updated_at: now,
-    };
-    store.add_task(task);
-}
+use commands::task::*;
+use commands::window::*;
 
 pub fn run() {
     tauri::Builder::default()
