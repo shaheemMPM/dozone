@@ -1,6 +1,6 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import FocusWindow from "./windows/FocusWindow";
-import MainWindow from "./windows/MainWindow";
+import MainWindow from "./windows/MainWindow/MainWindow";
 import PamphletWindow from "./windows/PamphletWindow";
 
 const App = () => {
