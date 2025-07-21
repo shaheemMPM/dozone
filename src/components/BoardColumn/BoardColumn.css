@@ -1,0 +1,32 @@
+.board-column {
+  flex: 0 0 260px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.column-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.add-task-button {
+  margin-top: auto;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  background-color: #f3f4f6;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-task-button:hover {
+  background-color: #e5e7eb;
+}

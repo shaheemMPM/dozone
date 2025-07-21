@@ -1,21 +1,14 @@
+import BoardColumn from "../../components/BoardColumn/BoardColumn";
 import "./MainWindow.css";
 
 const MainWindow = () => {
   return (
     <div className="main-window-wrapper">
       <div className="board-layout">
-        <div className="board-column">
-          <h2>Backlog</h2>
-        </div>
-        <div className="board-column">
-          <h2>This Week</h2>
-        </div>
-        <div className="board-column">
-          <h2>Today</h2>
-        </div>
-        <div className="board-column">
-          <h2>Done</h2>
-        </div>
+        <BoardColumn title="Backlog" />
+        <BoardColumn title="This Week" />
+        <BoardColumn title="Today" />
+        <BoardColumn title="Done" />
       </div>
     </div>
   );
