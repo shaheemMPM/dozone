@@ -22,8 +22,14 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             show_window,
             hide_window,
-            create_dummy_task,
-            get_all_tasks
+            get_all_tasks,
+            create_task,
+            update_task,
+            move_task,
+            delete_task,
+            add_subtask,
+            update_subtask,
+            remove_subtask
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

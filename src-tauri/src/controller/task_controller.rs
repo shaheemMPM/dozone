@@ -60,7 +60,7 @@ impl TaskStore {
         }
     }
 
-    fn persist_tasks(&self) {
+    pub fn persist_tasks(&self) {
         json_store::save_tasks(&self.task_path, &self.tasks);
     }
 }
