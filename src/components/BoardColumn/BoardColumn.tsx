@@ -14,12 +14,11 @@ type Props = {
 
 const BoardColumn = ({ title, tasks }: Props) => {
   const [showTopForm, setShowTopForm] = useState(false);
-  const [showBottomForm, setShowBottomForm] = useState(false);
+  const [isBottomFormExpanded, setIsBottomFormExpanded] = useState(false);
 
-  const handleAdd = async (titleText: string) => {
-    await createTask(titleText, title); // section = title
+  const handleAdd = async (titleText: string, position: "top" | "bottom") => {
+    await createTask(titleText, title, position); // section = title
     setShowTopForm(false);
-    setShowBottomForm(false);
   };
 
   return (
@@ -45,26 +44,15 @@ const BoardColumn = ({ title, tasks }: Props) => {
         </div>
       )}
 
-      {!showBottomForm && !showTopForm && (
-        <div className="add-task-wrapper">
-          <button
-            type="button"
-            className="add-task-button"
-            onClick={() => setShowBottomForm(true)}
-          >
-            + ADD TASK
-          </button>
-        </div>
-      )}
-      {showBottomForm && (
+      {!showTopForm && (
         <AddTaskAtBottomForm
-          section={title}
           onCreate={handleAdd}
-          onCancel={() => setShowBottomForm(false)}
+          expanded={isBottomFormExpanded}
+          setExpanded={setIsBottomFormExpanded}
         />
       )}
 
-      {tasks.length === 0 && !showTopForm && !showBottomForm && (
+      {tasks.length === 0 && !showTopForm && !isBottomFormExpanded && (
         <div className="all-clear">
           <img src={checkmarkIcon} alt="Checkmark" className="checkmark-icon" />
           <span>All Clear</span>

@@ -16,27 +16,6 @@
   margin-top: 0px;
 }
 
-.add-task-wrapper {
-  padding: 4px 0;
-  border-bottom: 1.75px solid #e5e7eb;
-  margin-bottom: 8px;
-}
-
-.add-task-button {
-  width: 100%;
-  text-align: left;
-  padding: 8px 0;
-  font-size: 0.875rem;
-  color: #666;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.add-task-button:hover {
-  color: #333;
-}
-
 .column-header {
   display: flex;
   justify-content: space-between;

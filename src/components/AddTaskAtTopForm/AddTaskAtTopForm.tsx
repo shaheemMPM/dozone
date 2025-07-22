@@ -3,7 +3,7 @@ import "./AddTaskAtTopForm.css";
 
 type Props = {
   section: string;
-  onCreate: (title: string) => void;
+  onCreate: (title: string, position: "top" | "bottom") => void;
 };
 
 const AddTaskAtTopForm = ({ onCreate }: Props) => {
@@ -11,7 +11,7 @@ const AddTaskAtTopForm = ({ onCreate }: Props) => {
 
   const handleSubmit = () => {
     if (title.trim()) {
-      onCreate(title.trim());
+      onCreate(title.trim(), "top");
       setTitle("");
     }
   };
