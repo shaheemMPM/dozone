@@ -1,10 +1,11 @@
 import { useState } from "react";
 import type { Task } from "../../types/Task";
-import AddTaskForm from "../AddTaskForm/AddTaskForm";
+import AddTaskAtTopForm from "../AddTaskAtTopForm/AddTaskAtTopForm";
 import TaskCard from "../TaskCard/TaskCard";
 import "./BoardColumn.css";
 import checkmarkIcon from "../../assets/svgs/check-square.svg";
 import { createTask } from "../../lib/tauri/tasks";
+import AddTaskAtBottomForm from "../AddTaskAtBottomForm/AddTaskAtBottomForm";
 
 type Props = {
   title: string;
@@ -34,43 +35,40 @@ const BoardColumn = ({ title, tasks }: Props) => {
         </button>
       </div>
 
-      {showTopForm && (
-        <AddTaskForm
-          section={title}
-          onCreate={handleAdd}
-          onCancel={() => setShowTopForm(false)}
-        />
+      {showTopForm && <AddTaskAtTopForm section={title} onCreate={handleAdd} />}
+
+      {tasks.length > 0 && (
+        <div className="task-list">
+          {tasks.map((task) => (
+            <TaskCard key={task.id} title={task.title} />
+          ))}
+        </div>
       )}
 
-      <div className="task-list">
-        {tasks.length === 0 ? (
-          <div className="all-clear">
-            <img
-              src={checkmarkIcon}
-              alt="Checkmark"
-              className="checkmark-icon"
-            />
-            <span>All Clear</span>
-          </div>
-        ) : (
-          tasks.map((task) => <TaskCard key={task.id} title={task.title} />)
-        )}
-      </div>
-
-      {showBottomForm ? (
-        <AddTaskForm
+      {!showBottomForm && !showTopForm && (
+        <div className="add-task-wrapper">
+          <button
+            type="button"
+            className="add-task-button"
+            onClick={() => setShowBottomForm(true)}
+          >
+            + ADD TASK
+          </button>
+        </div>
+      )}
+      {showBottomForm && (
+        <AddTaskAtBottomForm
           section={title}
           onCreate={handleAdd}
           onCancel={() => setShowBottomForm(false)}
         />
-      ) : (
-        <button
-          type="button"
-          className="add-task-button"
-          onClick={() => setShowBottomForm(true)}
-        >
-          + ADD TASK
-        </button>
+      )}
+
+      {tasks.length === 0 && !showTopForm && !showBottomForm && (
+        <div className="all-clear">
+          <img src={checkmarkIcon} alt="Checkmark" className="checkmark-icon" />
+          <span>All Clear</span>
+        </div>
       )}
     </div>
   );

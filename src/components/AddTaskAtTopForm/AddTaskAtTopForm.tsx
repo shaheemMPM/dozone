@@ -1,13 +1,12 @@
 import { useState } from "react";
-import "./AddTaskForm.css";
+import "./AddTaskAtTopForm.css";
 
 type Props = {
   section: string;
   onCreate: (title: string) => void;
-  onCancel: () => void;
 };
 
-const AddTaskForm = ({ onCreate, onCancel }: Props) => {
+const AddTaskAtTopForm = ({ onCreate }: Props) => {
   const [title, setTitle] = useState("");
 
   const handleSubmit = () => {
@@ -18,17 +17,15 @@ const AddTaskForm = ({ onCreate, onCancel }: Props) => {
   };
 
   return (
-    <div className="add-task-form">
+    <div className="add-task-top-form">
       <input
         type="text"
         placeholder="Enter task title*"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <div className="form-buttons">
-        <button type="button" onClick={onCancel} className="cancel-button">
-          Cancel
-        </button>
+      <div className="form-footer">
+        <p className="form-subtitle">Add a new task</p>
         <button type="button" onClick={handleSubmit} className="confirm-button">
           Add
         </button>
@@ -37,4 +34,4 @@ const AddTaskForm = ({ onCreate, onCancel }: Props) => {
   );
 };
 
-export default AddTaskForm;
+export default AddTaskAtTopForm;

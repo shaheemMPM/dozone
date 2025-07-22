@@ -16,20 +16,25 @@
   margin-top: 0px;
 }
 
+.add-task-wrapper {
+  padding: 4px 0;
+  border-bottom: 1.75px solid #e5e7eb;
+  margin-bottom: 8px;
+}
+
 .add-task-button {
-  margin-top: auto;
-  padding: 8px 12px;
+  width: 100%;
+  text-align: left;
+  padding: 8px 0;
   font-size: 0.875rem;
-  background-color: #f3f4f6;
-  color: #333;
+  color: #666;
+  background: none;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
 .add-task-button:hover {
-  background-color: #e5e7eb;
+  color: #333;
 }
 
 .column-header {
@@ -47,7 +52,6 @@
 }
 
 .task-list {
-  flex: 1;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
