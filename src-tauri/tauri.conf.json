@@ -15,8 +15,10 @@
         "label": "main",
         "url": "http://localhost:1420",
         "title": "Dozone",
-        "width": 1200,
+        "width": 1300,
         "height": 800,
+        "minWidth": 1160,
+        "minHeight": 600,
         "resizable": true
       },
       {

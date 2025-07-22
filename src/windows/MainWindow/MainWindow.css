@@ -1,13 +1,3 @@
-body,
-html {
-  margin: 0;
-  padding: 0;
-  background-color: #f9fafb;
-  color: #111;
-  font-family: system-ui, sans-serif;
-  height: 100%;
-}
-
 .main-window-wrapper {
   padding: 24px;
   height: 100vh;
@@ -21,4 +11,5 @@ html {
   gap: 24px;
   height: 100%;
   overflow-x: auto;
+  justify-content: center;
 }
