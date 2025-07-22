@@ -15,6 +15,7 @@ export type Subtask = {
   task_id: string;
   title: string;
   is_done: boolean;
+  order: number;
   created_at: string;
   updated_at: string;
 };
