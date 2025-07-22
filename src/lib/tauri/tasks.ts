@@ -10,8 +10,9 @@ export const getAllTasks = async (): Promise<Task[]> => {
 export const createTask = async (
   title: string,
   section: string,
+  position: "top" | "bottom",
 ): Promise<void> => {
-  return invoke("create_task", { title, section });
+  return invoke("create_task", { title, section, position });
 };
 
 export const updateTask = async (task: Task): Promise<void> => {

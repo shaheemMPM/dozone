@@ -9,20 +9,46 @@ pub fn get_all_tasks(state: State<AppState>) -> Vec<Task> {
 }
 
 #[tauri::command]
-pub fn create_task(state: State<AppState>, title: String, section: String) {
+pub fn create_task(
+    state: State<AppState>,
+    title: String,
+    section: String,
+    position: Option<String>, // "top" or "bottom"
+) {
     let mut store = state.task_store.lock().unwrap();
     let now = chrono::Utc::now();
+
+    // Filter the tasks belonging to this section
+    let section_tasks: Vec<_> = store
+        .tasks
+        .iter()
+        .filter(|t| t.section == section)
+        .collect();
+
+    let order = match position.as_deref() {
+        Some("top") => 0,
+        _ => section_tasks.len(), // default to bottom
+    };
+
+    if position.as_deref() == Some("top") {
+        // Shift existing tasks in this section
+        for t in store.tasks.iter_mut().filter(|t| t.section == section) {
+            t.order += 1;
+        }
+    }
+
     let task = Task {
         id: uuid::Uuid::new_v4().to_string(),
         board_id: "default".to_string(),
         title,
         notes: None,
         section,
-        order: store.tasks.len(),
-        subtasks: Vec::<Subtask>::new(),
+        order,
+        subtasks: Vec::new(),
         created_at: now,
         updated_at: now,
     };
+
     store.add_task(task);
 }
 
