@@ -52,12 +52,42 @@ impl TaskStore {
     }
 
     pub fn move_task(&mut self, task_id: &str, new_section: String, new_order: usize) {
-        if let Some(t) = self.tasks.iter_mut().find(|t| t.id == task_id) {
-            t.section = new_section;
-            t.order = new_order;
-            t.updated_at = chrono::Utc::now();
-            self.persist_tasks();
+        // Step 1: find and remove the task
+        let task_index = self.tasks.iter().position(|t| t.id == task_id);
+        if task_index.is_none() {
+            return;
         }
+        let mut task = self.tasks.remove(task_index.unwrap());
+
+        let old_section = task.section.clone();
+        let old_order = task.order;
+
+        // Step 2: update ordering in old section
+        for t in self
+            .tasks
+            .iter_mut()
+            .filter(|t| t.section == old_section && t.order > old_order)
+        {
+            t.order -= 1;
+        }
+
+        // Step 3: update ordering in new section
+        for t in self
+            .tasks
+            .iter_mut()
+            .filter(|t| t.section == new_section && t.order >= new_order)
+        {
+            t.order += 1;
+        }
+
+        // Step 4: update and reinsert task
+        task.section = new_section;
+        task.order = new_order;
+        task.updated_at = chrono::Utc::now();
+        self.tasks.push(task);
+
+        // Step 5: persist
+        self.persist_tasks();
     }
 
     pub fn persist_tasks(&self) {
