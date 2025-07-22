@@ -18,16 +18,19 @@ const AddTaskAtTopForm = ({ onCreate }: Props) => {
 
   return (
     <div className="add-task-top-form">
-      <input
-        type="text"
-        placeholder="Enter task title*"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <div className="input-container">
+        <div className="input-label">Title</div>
+        <input
+          type="text"
+          placeholder="Enter task title*"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
       <div className="form-footer">
         <p className="form-subtitle">Add a new task</p>
         <button type="button" onClick={handleSubmit} className="confirm-button">
-          Add
+          Confirm
         </button>
       </div>
     </div>
