@@ -10,9 +10,10 @@
 }
 
 .column-title {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
   margin-bottom: 12px;
+  margin-top: 0px;
 }
 
 .add-task-button {
@@ -29,4 +30,25 @@
 
 .add-task-button:hover {
   background-color: #e5e7eb;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.all-clear {
+  text-align: center;
+  margin-top: 32px;
+  color: #888;
+  font-size: 14px;
 }
