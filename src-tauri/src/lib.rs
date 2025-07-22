@@ -29,6 +29,7 @@ pub fn run() {
             delete_task,
             add_subtask,
             update_subtask,
+            move_subtask,
             remove_subtask
         ])
         .run(tauri::generate_context!())

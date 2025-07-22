@@ -15,6 +15,7 @@ pub struct Subtask {
     pub task_id: String,
     pub title: String,
     pub is_done: bool,
+    pub order: usize,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
