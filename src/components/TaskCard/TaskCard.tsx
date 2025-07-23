@@ -1,4 +1,6 @@
 import "./TaskCard.css";
+import { deleteTask } from "../../lib/tauri/tasks";
+import type { Task } from "../../types/Task";
 import ArrowLeftIcon from "../ui/icons/ArrowLeft";
 import ArrowRightIcon from "../ui/icons/ArrowRight";
 import CheckListIcon from "../ui/icons/CheckList";
@@ -6,10 +8,11 @@ import NotesIcon from "../ui/icons/Notes";
 import TrashIcon from "../ui/icons/Trash";
 
 type Props = {
-  title: string;
+  task: Task;
+  onTasksUpdated?: () => void;
 };
 
-const TaskCard = ({ title }: Props) => {
+const TaskCard = ({ task, onTasksUpdated }: Props) => {
   const handleAddSubTask = () => {
     console.log("Add sub task clicked");
   };
@@ -26,13 +29,16 @@ const TaskCard = ({ title }: Props) => {
     console.log("Move right clicked");
   };
 
-  const handleDelete = () => {
-    console.log("Delete clicked");
+  const handleDelete = async () => {
+    await deleteTask(task.id);
+    if (onTasksUpdated) {
+      onTasksUpdated();
+    }
   };
 
   return (
     <div className="task-card">
-      <div className="task-title">{title}</div>
+      <div className="task-title">{task.title}</div>
       <div className="task-actions">
         <button
           type="button"

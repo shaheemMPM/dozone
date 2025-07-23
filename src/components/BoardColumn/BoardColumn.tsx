@@ -61,7 +61,11 @@ const BoardColumn = ({ title, tasks, onTasksUpdated }: Props) => {
             <div className="loading-indicator">Refreshing tasks...</div>
           ) : (
             sortedTasks.map((task) => (
-              <TaskCard key={task.id} title={task.title} />
+              <TaskCard
+                key={task.id}
+                task={task}
+                onTasksUpdated={onTasksUpdated}
+              />
             ))
           )}
         </div>
