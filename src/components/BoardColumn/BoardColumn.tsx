@@ -10,15 +10,34 @@ import AddTaskAtBottomForm from "../AddTaskAtBottomForm/AddTaskAtBottomForm";
 type Props = {
   title: string;
   tasks: Task[];
+  onTasksUpdated?: () => void;
 };
 
-const BoardColumn = ({ title, tasks }: Props) => {
+const BoardColumn = ({ title, tasks, onTasksUpdated }: Props) => {
   const [showTopForm, setShowTopForm] = useState(false);
   const [isBottomFormExpanded, setIsBottomFormExpanded] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const handleAdd = async (titleText: string, position: "top" | "bottom") => {
-    await createTask(titleText, title, position); // section = title
-    setShowTopForm(false);
+  const sortedTasks = [...tasks].sort((a, b) => a.order - b.order);
+
+  const handleAdd = async (
+    titleText: string,
+    position: "top" | "bottom" = "bottom",
+  ) => {
+    setIsRefreshing(true);
+    try {
+      await createTask(titleText, title, position); // section = title
+      setShowTopForm(false);
+      setIsBottomFormExpanded(false);
+
+      if (onTasksUpdated) {
+        onTasksUpdated();
+      }
+    } catch (error) {
+      console.error("Error adding task:", error);
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   return (
@@ -36,11 +55,15 @@ const BoardColumn = ({ title, tasks }: Props) => {
 
       {showTopForm && <AddTaskAtTopForm section={title} onCreate={handleAdd} />}
 
-      {tasks.length > 0 && (
+      {sortedTasks.length > 0 && (
         <div className="task-list">
-          {tasks.map((task) => (
-            <TaskCard key={task.id} title={task.title} />
-          ))}
+          {isRefreshing ? (
+            <div className="loading-indicator">Refreshing tasks...</div>
+          ) : (
+            sortedTasks.map((task) => (
+              <TaskCard key={task.id} title={task.title} />
+            ))
+          )}
         </div>
       )}
 
@@ -52,12 +75,19 @@ const BoardColumn = ({ title, tasks }: Props) => {
         />
       )}
 
-      {tasks.length === 0 && !showTopForm && !isBottomFormExpanded && (
-        <div className="all-clear">
-          <img src={checkmarkIcon} alt="Checkmark" className="checkmark-icon" />
-          <span>All Clear</span>
-        </div>
-      )}
+      {sortedTasks.length === 0 &&
+        !showTopForm &&
+        !isBottomFormExpanded &&
+        !isRefreshing && (
+          <div className="all-clear">
+            <img
+              src={checkmarkIcon}
+              alt="Checkmark"
+              className="checkmark-icon"
+            />
+            <span>All Clear</span>
+          </div>
+        )}
     </div>
   );
 };

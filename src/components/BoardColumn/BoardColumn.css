@@ -59,3 +59,11 @@
   height: 24px;
   margin-bottom: 0;
 }
+
+.loading-indicator {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  padding: 12px 0;
+  font-style: italic;
+}

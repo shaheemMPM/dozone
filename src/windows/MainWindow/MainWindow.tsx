@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import BoardColumn from "../../components/BoardColumn/BoardColumn";
 import "./MainWindow.css";
 import { getAllTasks } from "../../lib/tauri/tasks";
@@ -7,18 +7,18 @@ import type { Task } from "../../types/Task";
 const MainWindow = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const allTasks = await getAllTasks();
-        setTasks(allTasks);
-      } catch (err) {
-        console.error("Failed to load tasks:", err);
-      }
-    };
-
-    fetchTasks();
+  const fetchTasks = useCallback(async () => {
+    try {
+      const allTasks = await getAllTasks();
+      setTasks(allTasks);
+    } catch (err) {
+      console.error("Failed to load tasks:", err);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
 
   const sections = ["Backlog", "This Week", "Today", "Done"];
 
@@ -30,6 +30,7 @@ const MainWindow = () => {
             key={section}
             title={section}
             tasks={tasks.filter((t) => t.section === section)}
+            onTasksUpdated={fetchTasks}
           />
         ))}
       </div>
