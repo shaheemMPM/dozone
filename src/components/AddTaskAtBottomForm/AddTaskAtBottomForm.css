@@ -1,7 +1,4 @@
-.add-task-bottom-container {
-  width: 100%;
-}
-
+/* Trigger Button Styling */
 .add-task-wrapper {
   padding: 4px 0;
   border-bottom: 1.75px solid #e5e7eb;
@@ -23,39 +20,92 @@
   color: #333;
 }
 
+/* Form Styling */
 .add-task-bottom-form {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-top: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 10px;
+  border-bottom: 1.75px solid #e5e7eb;
+}
+
+.add-task-bottom-form .cancel-button {
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  align-self: flex-start;
+  font-weight: 500;
+}
+
+.add-task-bottom-form .input-container {
+  position: relative;
+  margin-top: 10px;
+}
+
+.add-task-bottom-form .input-label {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  background-color: white;
+  padding: 0 4px;
+  font-size: 10px;
+  color: #888;
+  z-index: 1;
+}
+
+.add-task-bottom-form .input-container {
+  padding: 2px;
+  background: linear-gradient(135deg, #ff6bc1 0%, #b84ee2 50%, #4f7fff 100%);
+  border-radius: 5px;
+  display: flex;
 }
 
 .add-task-bottom-form input {
   padding: 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
+  border: none;
+  background-color: white;
+  border-radius: 3px;
   font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  outline: none;
 }
 
-.add-task-bottom-form .form-buttons {
+.add-task-bottom-form .form-footer {
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+  justify-content: space-between;
+  margin-top: 5px;
+  align-items: center;
 }
 
 .add-task-bottom-form .confirm-button {
-  background-color: #4ade80;
+  background: linear-gradient(135deg, #ff6bc1 0%, #b84ee2 50%, #4f7fff 100%);
   border: none;
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 4px;
+  padding: 2px 14px;
+  font-size: 12px;
+  border-radius: 20px;
+  color: white;
   cursor: pointer;
+  transition: opacity 0.2s;
+  line-height: 1;
+  height: 30px;
 }
 
-.add-task-bottom-form .cancel-button {
-  background: transparent;
-  border: none;
+.add-task-bottom-form .confirm-button:hover {
+  opacity: 0.9;
+}
+
+.add-task-bottom-form .form-subtitle {
+  margin: 0;
   color: #888;
-  font-size: 14px;
-  cursor: pointer;
+  font-size: 12px;
 }

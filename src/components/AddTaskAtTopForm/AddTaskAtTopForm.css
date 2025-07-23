@@ -7,12 +7,12 @@
   border-bottom: 1.75px solid #e5e7eb;
 }
 
-.input-container {
+.add-task-top-form .input-container {
   position: relative;
   margin-top: 10px;
 }
 
-.input-label {
+.add-task-top-form .input-label {
   position: absolute;
   top: -8px;
   left: 10px;
@@ -23,7 +23,7 @@
   z-index: 1;
 }
 
-.input-container {
+.add-task-top-form .input-container {
   padding: 2px;
   background: linear-gradient(135deg, #ff6bc1 0%, #b84ee2 50%, #4f7fff 100%);
   border-radius: 5px;
