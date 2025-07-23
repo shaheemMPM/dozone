@@ -28,7 +28,7 @@ const AddTaskAtBottomForm = ({ onCreate, expanded, setExpanded }: Props) => {
     return (
       <div className="add-task-bottom-form">
         <button type="button" onClick={handleCancel} className="cancel-button">
-          <CloseIcon size={11} color="#666" /> CANCEL
+          <CloseIcon size={11} color="#666" tooltip="Cancel" /> CANCEL
         </button>
         <div className="input-container">
           <div className="input-label">Title</div>
