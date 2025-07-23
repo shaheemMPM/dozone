@@ -1,5 +1,6 @@
 import "./TaskCard.css";
-import { deleteTask } from "../../lib/tauri/tasks";
+import { SECTIONS } from "../../lib/constants";
+import { deleteTask, moveTask } from "../../lib/tauri/tasks";
 import type { Task } from "../../types/Task";
 import ArrowLeftIcon from "../ui/icons/ArrowLeft";
 import ArrowRightIcon from "../ui/icons/ArrowRight";
@@ -9,10 +10,16 @@ import TrashIcon from "../ui/icons/Trash";
 
 type Props = {
   task: Task;
+  section: string;
   onTasksUpdated?: () => void;
 };
 
-const TaskCard = ({ task, onTasksUpdated }: Props) => {
+const TaskCard = ({ task, section, onTasksUpdated }: Props) => {
+  const currentSectionIndex = SECTIONS.indexOf(section);
+
+  const isFirstSection = currentSectionIndex === 0;
+  const isLastSection = currentSectionIndex === SECTIONS.length - 1;
+
   const handleAddSubTask = () => {
     console.log("Add sub task clicked");
   };
@@ -21,18 +28,42 @@ const TaskCard = ({ task, onTasksUpdated }: Props) => {
     console.log("Add notes clicked");
   };
 
-  const handleMoveLeft = () => {
-    console.log("Move left clicked");
+  const handleMoveLeft = async () => {
+    if (isFirstSection) return;
+
+    const targetSection = SECTIONS[currentSectionIndex - 1];
+    try {
+      await moveTask(task.id, targetSection, 0);
+      if (onTasksUpdated) {
+        onTasksUpdated();
+      }
+    } catch (error) {
+      console.error("Error moving task left:", error);
+    }
   };
 
-  const handleMoveRight = () => {
-    console.log("Move right clicked");
+  const handleMoveRight = async () => {
+    if (isLastSection) return;
+
+    const targetSection = SECTIONS[currentSectionIndex + 1];
+    try {
+      await moveTask(task.id, targetSection, 0);
+      if (onTasksUpdated) {
+        onTasksUpdated();
+      }
+    } catch (error) {
+      console.error("Error moving task right:", error);
+    }
   };
 
   const handleDelete = async () => {
-    await deleteTask(task.id);
-    if (onTasksUpdated) {
-      onTasksUpdated();
+    try {
+      await deleteTask(task.id);
+      if (onTasksUpdated) {
+        onTasksUpdated();
+      }
+    } catch (error) {
+      console.error("Error deleting task:", error);
     }
   };
 
@@ -56,22 +87,26 @@ const TaskCard = ({ task, onTasksUpdated }: Props) => {
         >
           <NotesIcon size={14} color="#6B7280" tooltip="Add notes" />
         </button>
-        <button
-          type="button"
-          className="task-action-button"
-          onClick={handleMoveLeft}
-          title="Move left"
-        >
-          <ArrowLeftIcon size={14} color="#6B7280" tooltip="Move left" />
-        </button>
-        <button
-          type="button"
-          className="task-action-button"
-          onClick={handleMoveRight}
-          title="Move right"
-        >
-          <ArrowRightIcon size={14} color="#6B7280" tooltip="Move right" />
-        </button>
+        {!isFirstSection && (
+          <button
+            type="button"
+            className="task-action-button"
+            onClick={handleMoveLeft}
+            title="Move left"
+          >
+            <ArrowLeftIcon size={14} color="#6B7280" tooltip="Move left" />
+          </button>
+        )}
+        {!isLastSection && (
+          <button
+            type="button"
+            className="task-action-button"
+            onClick={handleMoveRight}
+            title="Move right"
+          >
+            <ArrowRightIcon size={14} color="#6B7280" tooltip="Move right" />
+          </button>
+        )}
         <button
           type="button"
           className="task-action-button"

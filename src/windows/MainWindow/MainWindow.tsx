@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import BoardColumn from "../../components/BoardColumn/BoardColumn";
 import "./MainWindow.css";
+import { SECTIONS } from "../../lib/constants";
 import { getAllTasks } from "../../lib/tauri/tasks";
 import type { Task } from "../../types/Task";
 
@@ -20,12 +21,10 @@ const MainWindow = () => {
     fetchTasks();
   }, [fetchTasks]);
 
-  const sections = ["Backlog", "This Week", "Today", "Done"];
-
   return (
     <div className="main-window-wrapper">
       <div className="board-layout">
-        {sections.map((section) => (
+        {SECTIONS.map((section) => (
           <BoardColumn
             key={section}
             title={section}

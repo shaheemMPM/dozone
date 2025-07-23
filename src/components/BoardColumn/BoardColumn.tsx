@@ -64,6 +64,7 @@ const BoardColumn = ({ title, tasks, onTasksUpdated }: Props) => {
               <TaskCard
                 key={task.id}
                 task={task}
+                section={title}
                 onTasksUpdated={onTasksUpdated}
               />
             ))
