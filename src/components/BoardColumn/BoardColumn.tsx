@@ -5,6 +5,7 @@ import TaskCard from "../TaskCard/TaskCard";
 import "./BoardColumn.css";
 import checkmarkIcon from "../../assets/svgs/check-square.svg";
 import { createTask } from "../../lib/tauri/tasks";
+import { hideWindow, showWindow } from "../../lib/tauri/windows";
 import AddTaskAtBottomForm from "../AddTaskAtBottomForm/AddTaskAtBottomForm";
 
 type Props = {
@@ -40,8 +41,19 @@ const BoardColumn = ({ title, tasks, onTasksUpdated }: Props) => {
     }
   };
 
+  const handleStartDay = async () => {
+    try {
+      await showWindow("pamphlet");
+      await hideWindow("main");
+    } catch (error) {
+      console.error("Error starting day:", error);
+    }
+  };
+
+  const isTodayColumn = title === "Today";
+
   return (
-    <div className="board-column">
+    <div className={`board-column ${isTodayColumn ? "today-column" : ""}`}>
       <div className="column-header">
         <h2 className="column-title">{title}</h2>
         <button
@@ -55,30 +67,32 @@ const BoardColumn = ({ title, tasks, onTasksUpdated }: Props) => {
 
       {showTopForm && <AddTaskAtTopForm section={title} onCreate={handleAdd} />}
 
-      {sortedTasks.length > 0 && (
-        <div className="task-list">
-          {isRefreshing ? (
-            <div className="loading-indicator">Refreshing tasks...</div>
-          ) : (
-            sortedTasks.map((task) => (
-              <TaskCard
-                key={task.id}
-                task={task}
-                section={title}
-                onTasksUpdated={onTasksUpdated}
-              />
-            ))
-          )}
-        </div>
-      )}
+      <div className="scroll-container">
+        {sortedTasks.length > 0 && (
+          <div className="task-list">
+            {isRefreshing ? (
+              <div className="loading-indicator">Refreshing tasks...</div>
+            ) : (
+              sortedTasks.map((task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  section={title}
+                  onTasksUpdated={onTasksUpdated}
+                />
+              ))
+            )}
+          </div>
+        )}
 
-      {!showTopForm && (
-        <AddTaskAtBottomForm
-          onCreate={handleAdd}
-          expanded={isBottomFormExpanded}
-          setExpanded={setIsBottomFormExpanded}
-        />
-      )}
+        {!showTopForm && (
+          <AddTaskAtBottomForm
+            onCreate={handleAdd}
+            expanded={isBottomFormExpanded}
+            setExpanded={setIsBottomFormExpanded}
+          />
+        )}
+      </div>
 
       {sortedTasks.length === 0 &&
         !showTopForm &&
@@ -93,6 +107,18 @@ const BoardColumn = ({ title, tasks, onTasksUpdated }: Props) => {
             <span>All Clear</span>
           </div>
         )}
+
+      {isTodayColumn && (
+        <div className="start-day-container">
+          <button
+            type="button"
+            className="start-day-button"
+            onClick={handleStartDay}
+          >
+            Start Today
+          </button>
+        </div>
+      )}
     </div>
   );
 };
